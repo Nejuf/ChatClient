@@ -1,17 +1,32 @@
 <head>
   <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/jquery.serializeJSON.js"></script>
+  <script src="/public/javascripts/chat.js"></script>
+  <script src="/public/javascripts/chat_ui.js"></script>
 </head>
 
 <h1>Index</h1>
 
-<div class="messages">
+<div class="chatUI">
+  <div class="messages">
+    <ul>
+    </ul>
+  </div>
+
+  <div class="message-input">
+    <form class="message-input-form" method="post" accept-charset="utf-8">
+
+      <textarea class= "message" name="message" rows="8" cols="40"></textarea>
+
+      <p><input type="submit" value="Send"></p>
+    </form>
+  </div>
 </div>
-
-<div class="message-input">
-  <form action="" method="post" accept-charset="utf-8">
-    <input type="text" name="" value="" id="">
-
-
-    <p><input type="submit" value="Send"></p>
-  </form>
-</div>
+<script>
+  $(document).ready(function(){
+    var socket = io.connect('http://localhost:8080');
+    var chat = new Chat(socket);
+    var chatUI = new ChatUI($("div.chatUI"), chat);
+  });
+</script>
