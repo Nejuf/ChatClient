@@ -25,7 +25,7 @@
 </div>
 <script>
   $(document).ready(function(){
-    var socket = io.connect('http://localhost:8080');
+    var socket = io.connect('/');
     var chat = new Chat(socket);
     var chatUI = new ChatUI($("div.chatUI"), chat);
   });
