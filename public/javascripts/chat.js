@@ -19,7 +19,12 @@ Chat.displayMessage = function(message) {
 Chat.prototype.processCommand = function(commandString) {
 
   if(commandString.substr(1,4) == "nick") {
-    this.socket.emit("nicknameChangeRequest", commandString.substr(6, commandString.length-1))
+    this.socket.emit("nicknameChangeRequest", commandString.substr(6, commandString.length-1));
+    $("textarea.message").val("");
+  }
+  else if(commandString.substr(1,4) == "join") {
+    this.socket.emit("roomChangeRequest", commandString.substr(6, commandString.length-1));
+    $("textarea.message").val("");
   }
   else {
     console.log("Error, invalid command");
