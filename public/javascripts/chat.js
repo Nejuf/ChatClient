@@ -9,9 +9,20 @@ Chat = function (socket) {
 Chat.prototype.sendMessage = function(message){
   // this.socket.emit("message", { text: message });
   this.socket.emit("new_message", message);
+  $("textarea.message").val("");
 }
 
 Chat.displayMessage = function(message) {
   $("div.messages ul").append("<li>" + message + "</li>");
-  $("textarea.message").val("");
+}
+
+Chat.prototype.processCommand = function(commandString) {
+
+  if(commandString.substr(1,4) == "nick") {
+    this.socket.emit("nicknameChangeRequest", commandString.substr(6, commandString.length-1))
+  }
+  else {
+    console.log("Error, invalid command");
+    Chat.displayMessage( "Invalid/unrecognized command: " + commandString );
+  }
 }

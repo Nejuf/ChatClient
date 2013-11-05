@@ -7,7 +7,13 @@ ChatUI = function($rootEl, chat){
 ChatUI.prototype.getMessage = function(event) {
   event.preventDefault();
   var formData = $(event.currentTarget).serializeJSON();
-  this.sendMessage(formData.message);
+
+  if(formData.message[0] == '/') {
+    this.chat.processCommand(formData.message);
+  }
+  else {
+    this.sendMessage(formData.message);
+  }
 }
 
 ChatUI.prototype.sendMessage = function(message) {
