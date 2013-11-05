@@ -3,7 +3,11 @@ Chat = function (socket) {
  this.socket = socket;
  this.socket.on("message", function(data){
    Chat.displayMessage(data);
- })
+ });
+
+ this.socket.on("updateUsers", function(data) {
+   Chat.updateUsers(data.users);
+ });
 }
 
 Chat.prototype.sendMessage = function(message){
@@ -14,6 +18,15 @@ Chat.prototype.sendMessage = function(message){
 
 Chat.displayMessage = function(message) {
   $("div.messages ul").append("<li>" + message + "</li>");
+}
+
+Chat.updateUsers = function(userList) {
+  $("div.users ul").empty();
+  var listText = "";
+  userList.forEach(function(userItem){
+    listText += "<li>" + userItem + "</li>"
+  });
+  $("div.users ul").append(listText);
 }
 
 Chat.prototype.processCommand = function(commandString) {
